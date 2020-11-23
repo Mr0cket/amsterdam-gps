@@ -1,28 +1,31 @@
-import axios from "axios";
-
-axios.create({
+import a from "axios";
+import _ from "lodash";
+const axios = a.create({
   baseURL: "https://my-json-server.typicode.com/Codaisseur/patient-doctor-data",
 });
 async function fetchData(endPoint, setState) {
-  const doctorData = await axios
+  console.log("fetching:", endPoint);
+  const data = await axios
     .get(endPoint)
     .then((res) => res.data)
     .catch((e) => console.error("request error:", e));
 
-  if ("0" in doctorData) {
-    console.log(doctorData);
+  if (data.length > 0 || !_.isEmpty(data)) {
     setState({
-      data: doctorData,
+      data: data,
       status: "success",
       error: false,
     });
-  } else if (doctorData.length === 0) {
+  } else if (_.isEmpty(data)) {
     console.log("error retrieving data");
     setState({
       data: false,
       status: "fail",
       error: "error retrieving data",
     });
-  } else console.log("I shouldnt get here... but I did :/");
+  } else {
+    console.log("I shouldnt get here... but I did :/");
+    console.log(data);
+  }
 }
 export default fetchData;
