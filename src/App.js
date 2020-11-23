@@ -9,31 +9,18 @@ import {
   PatientSignup,
   NoMatch,
 } from "./views/viewIndex";
-import getData from "./axios";
 import { NavHeader } from "./components/componentIndex";
 
 function App() {
-  const [doctorsData, setDoctorsData] = useState();
-
-  useEffect(() => {
-    getData("/doctors", setDoctorsData);
-  }, []);
   return (
     <React.Fragment>
       <NavHeader />
       {/* new syntax to avoid creating unnecessary wrapping element */}
       <Switch>
         <Route path="/doctors" component={DoctorSchedule} />
-        <Route
-          exact
-          path="/patients"
-          component={() => <Patients doctors={doctorsData} />}
-        />
+        <Route exact path="/patients" component={Patients} />
         <Route path="/patients/signup" component={PatientSignup} />
-        <Route
-          path="/patients/:patientID"
-          component={() => <PatientDetails doctors={doctorsData} />}
-        />
+        <Route path="/patients/:patientID" component={PatientDetails} />
         <Route exact path="/" component={Home} />
         <Route path="/" component={NoMatch} />
       </Switch>
