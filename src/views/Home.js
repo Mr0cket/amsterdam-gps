@@ -1,18 +1,18 @@
 import React from "react";
-import { Container, Jumbotron } from "react-bootstrap";
+import { Button, Container, Jumbotron } from "react-bootstrap";
+import { OfficeDetails } from "../components/componentIndex";
 
 export default function Home() {
-  const isBusinessHours = () => {
-    const HoursOfDay = new Date().getHours();
-    console.log(HoursOfDay);
-    return true;
-  };
   return (
     <Jumbotron fluid>
       <Container>
         <h1>Amsterdam GPs</h1>
-        <h5>We are: {isBusinessHours() ? "Open" : "Closed"}</h5>
-        <p>To make an appointment call: (69)123 420 7890</p>
+        <OfficeDetails />
+        <Button href="/doctors" className="mb-3">
+          Doctors on Duty
+        </Button>
+        <br />
+        <Button href="/patients/signup">I am a new patient</Button>
       </Container>
     </Jumbotron>
   );
