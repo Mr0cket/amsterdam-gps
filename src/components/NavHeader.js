@@ -3,7 +3,6 @@ import { Nav, Navbar } from "react-bootstrap";
 
 export default function NavHeader() {
   const history = useHistory();
-  console.log(history);
   return (
     <Navbar bg="light" variant="light">
       <Nav activeKey={history.location.pathname}>
