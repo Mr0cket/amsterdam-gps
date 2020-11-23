@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Table } from "react-bootstrap";
-import axios from "../axios";
+import getData from "../axios";
+import { OfficeDetails } from "../components/componentIndex";
 
 export default function Doctors() {
   const endpoint = "/doctors";
@@ -10,31 +11,8 @@ export default function Doctors() {
     error: null,
   });
 
-  const fetchData = async (ep) => {
-    const doctorData = await axios
-      .get(ep)
-      .then((res) => res.data)
-      .catch((e) => console.error("request error:", e));
-
-    if ("0" in doctorData) {
-      console.log(doctorData);
-      setPageState({
-        data: doctorData,
-        status: "success",
-        error: false,
-      });
-    } else if (doctorData.length === 0) {
-      console.log("error retrieving data");
-      setPageState({
-        data: false,
-        status: "fail",
-        error: "error retrieving data",
-      });
-    } else console.log("I shouldnt get here... but I did :/");
-  };
-
   useEffect(() => {
-    fetchData(endpoint);
+    getData(endpoint, setPageState);
   }, []);
 
   let doctors;
@@ -64,6 +42,7 @@ export default function Doctors() {
         </thead>
         <tbody>{doctors}</tbody>
       </Table>
+      <OfficeDetails />
     </Container>
   );
 }
