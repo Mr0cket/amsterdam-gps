@@ -3,6 +3,11 @@
 # Plan
 
 - Create routes, initialise app & install dependencies
+- Dependencies:
+  - bootstrap, react-bootstrap
+  - react-router-dom
+  - sass
+  - axios
 - Dynamic route for patientDetails
 - Static routes for all other pages.
 - Create Header Nav component present on all pages (outside of switch in app.js) with links to routes

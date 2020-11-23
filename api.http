@@ -1,0 +1,10 @@
+GET https://my-json-server.typicode.com/Codaisseur/patient-doctor-data/
+### Endpoints:
+### GET /doctors
+GET https://my-json-server.typicode.com/Codaisseur/patient-doctor-data/doctors
+### GET /patients
+GET https://my-json-server.typicode.com/Codaisseur/patient-doctor-data/patients
+### GET /patients/:patientId
+GET https://my-json-server.typicode.com/Codaisseur/patient-doctor-data/patients/5856675843
+### A JSON with all the data:
+GET https://my-json-server.typicode.com/Codaisseur/patient-doctor-data/db

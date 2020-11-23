@@ -18,7 +18,7 @@ function App() {
       {/* new syntax to avoid creating unnecessary wrapping element */}
       <Switch>
         <Route path="/doctors" component={DoctorSchedule} />
-        <Route path="/patients" component={Patients} />
+        <Route exact path="/patients" component={Patients} />
         <Route path="/patients/signup" component={PatientSignup} />
         <Route path="patients/:patientID" component={PatientDetails} />
         <Route exact path="/" component={Home} />
