@@ -3,7 +3,7 @@ import _ from "lodash";
 const axios = a.create({
   baseURL: "https://my-json-server.typicode.com/Codaisseur/patient-doctor-data",
 });
-export default async function fetchData(endPoints, setState) {
+export default async function fetchData(setState, ...endPoints) {
   console.log("fetching:", endPoints);
   const promises = endPoints.map((endPoint) =>
     axios
@@ -11,12 +11,16 @@ export default async function fetchData(endPoints, setState) {
       .then((res) => res.data)
       .catch((e) => console.error("request error:", e))
   );
-
   const results = await Promise.all(promises);
-  console.log(results);
-  if (results.length > 0) {
+  if (results.length > 1) {
     setState({
-      data: results,
+      data: results, // will always be an array of results.
+      status: "success",
+      error: false,
+    });
+  } else if (results.length === 1) {
+    setState({
+      data: results[0], // Will not be an array of results.
       status: "success",
       error: false,
     });

@@ -7,7 +7,14 @@ export default function OfficeDetails() {
   };
   return (
     <div>
-      <h5>We are: {isBusinessHours() ? "Open" : "Closed"}</h5>
+      <h5>
+        We are:{" "}
+        {isBusinessHours() ? (
+          <span className="open">Open</span>
+        ) : (
+          <span className="Closed">Closed</span>
+        )}
+      </h5>
       <p>To make an appointment call: (69)123 420 7890</p>
     </div>
   );

@@ -9,42 +9,48 @@ import getData from "../../axios";
 import { PatientItem } from "../../components/componentIndex";
 import "./patients.scss";
 
-export default function Patients(/* { doctors } */) {
-  const endpoint = "/patients";
+export default function Patients() {
+  const patientEndpoint = "/patients";
+  const doctorEndpoint = "/doctors";
   const [pageState, setPageState] = useState({
-    data: null,
+    data: null, // an array of the results of the fetch commands.
     status: "idle",
     error: null,
   });
+  const [value, setValue] = useState([1, 3]);
+
   useEffect(() => {
     console.log("use Effected");
-    getData(endpoint, setPageState);
+    getData(setPageState, patientEndpoint, doctorEndpoint);
   }, []);
-  const [value, setValue] = useState([1, 3]);
+
   let patientsList, doctorsList;
   if (pageState.status === "success") {
-    patientsList = pageState.data.map((patient) => (
-      <PatientItem key={patient.id} patient={patient} />
-    ));
-  }
-  /* if (doctors) {
-    doctorsList = doctors.data.map((doctor) => (
+    const patients = pageState.data[0];
+    const doctors = pageState.data[1];
+    patientsList = patients
+      .filter((patient) =>
+        value.find((element) => element === patient.doctorId)
+      )
+      .map((patient) => <PatientItem key={patient.id} patient={patient} />);
+
+    doctorsList = doctors.map((doctor) => (
       <ToggleButton key={doctor.id} value={doctor.id}>
         {doctor.doctor}
       </ToggleButton>
     ));
-  } */
+  }
   return (
     <Container>
       <h1>Patients Database</h1>
       <Row>
-        <h4>Doctor </h4>
+        <h4>Doctor: </h4>
         <ToggleButtonGroup
           type="checkbox"
           value={value}
           onChange={(val) => setValue(val)}
         >
-          {/* doctorsList */}
+          {doctorsList}
         </ToggleButtonGroup>
       </Row>
       {patientsList}

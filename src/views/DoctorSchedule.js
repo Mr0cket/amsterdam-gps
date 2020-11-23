@@ -12,7 +12,7 @@ export default function Doctors() {
   });
 
   useEffect(() => {
-    getData(endpoint, setPageState);
+    getData(setPageState, endpoint);
   }, []);
 
   let doctors;
@@ -24,7 +24,13 @@ export default function Doctors() {
           <td>
             <a href={`mailto: ${doctor.email}`}>{doctor.doctor}</a>
           </td>
-          <td>{doctor.onduty ? "available" : "offduty"}</td>
+          <td>
+            {doctor.onduty ? (
+              <span className="open">available</span>
+            ) : (
+              <span className="closed">off-duty</span>
+            )}
+          </td>
         </tr>
       );
     });
