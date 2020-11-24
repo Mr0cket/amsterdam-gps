@@ -9,7 +9,7 @@ import {
   PatientSignup,
   NoMatch,
 } from "./views/viewIndex";
-import { NavHeader } from "./components/componentIndex";
+import { NavHeader, OfficeDetails } from "./components/componentIndex";
 
 function App() {
   return (
@@ -24,6 +24,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route path="/" component={NoMatch} />
       </Switch>
+      <OfficeDetails />
     </React.Fragment>
   );
 }

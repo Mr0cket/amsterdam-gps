@@ -1,5 +1,5 @@
 import NavHeader from "./NavHeader";
 import OfficeDetails from "./OfficeDetails";
-import PatientItem from "./PatientItem";
+import PatientCard from "./PatientCard";
 
-export { NavHeader, OfficeDetails, PatientItem };
+export { NavHeader, OfficeDetails, PatientCard };

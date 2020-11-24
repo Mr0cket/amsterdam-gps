@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  Container,
-  Row,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "react-bootstrap";
+import { CardColumns, Container, Row, Form } from "react-bootstrap";
 import getData from "../../axios";
-import { PatientItem } from "../../components/componentIndex";
+import { PatientCard } from "../../components/componentIndex";
 import "./patients.scss";
 
 export default function Patients() {
@@ -17,27 +12,40 @@ export default function Patients() {
     status: "idle",
     error: null,
   });
-  const [value, setValue] = useState([1, 3]);
-
+  const [filter, setFilter] = useState("all");
   useEffect(() => {
     console.log("use Effected");
     getData(setPageState, patientEndpoint, doctorEndpoint);
   }, []);
 
+  let handleFilter = null;
   let patientsList, doctorsList;
   if (pageState.status === "success") {
     const patients = pageState.data[0];
     const doctors = pageState.data[1];
+    handleFilter = (e) => {
+      const matchedDoctor = doctors.find(
+        (doctor) => doctor.doctor === e.target.value
+      );
+      setFilter(matchedDoctor ? matchedDoctor.id : "all");
+    };
     patientsList = patients
-      .filter((patient) =>
-        value.find((element) => element === patient.doctorId)
-      )
-      .map((patient) => <PatientItem key={patient.id} patient={patient} />);
+      .filter((patient) => {
+        if (filter === "all") return true;
+        else if (patient.doctorId === filter) return true;
+        else return false;
+      })
+      .sort((a, b) => {
+        const nameA = a.lastName.toUpperCase();
+        const nameB = b.lastName.toUpperCase();
+        if (nameA > nameB) return -1;
+        if (nameA < nameB) return 1;
+        else return 0;
+      })
+      .map((patient) => <PatientCard key={patient.id} patient={patient} />);
 
     doctorsList = doctors.map((doctor) => (
-      <ToggleButton key={doctor.id} value={doctor.id}>
-        {doctor.doctor}
-      </ToggleButton>
+      <option key={doctor.id}>{doctor.doctor}</option>
     ));
   }
   return (
@@ -45,15 +53,12 @@ export default function Patients() {
       <h1>Patients Database</h1>
       <Row>
         <h4>Doctor: </h4>
-        <ToggleButtonGroup
-          type="checkbox"
-          value={value}
-          onChange={(val) => setValue(val)}
-        >
+        <Form.Control as="select" onChange={handleFilter} className="mb-3">
+          <option>all</option>
           {doctorsList}
-        </ToggleButtonGroup>
+        </Form.Control>
       </Row>
-      {patientsList}
+      <CardColumns>{patientsList}</CardColumns>
     </Container>
   );
 }

@@ -34,6 +34,20 @@ export default function Doctors() {
         </tr>
       );
     });
+  } else if (pageState.status === "idle") {
+    doctors = (
+      <tr>
+        <td>loading data</td>
+        <td>n/a</td>
+      </tr>
+    );
+  } else if (pageState.status === "fail") {
+    doctors = (
+      <tr>
+        <td>unable to retrieve doctors from database</td>
+        <td>n/a</td>
+      </tr>
+    );
   }
 
   return (
@@ -48,7 +62,6 @@ export default function Doctors() {
         </thead>
         <tbody>{doctors}</tbody>
       </Table>
-      <OfficeDetails />
     </Container>
   );
 }
